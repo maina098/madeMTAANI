@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wi-Fi Inventory System</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #218838;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #f8f9fa;
+}
+
+tr:hover {
+  background: #f1f1f1;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Wi-Fi Inventory System</h1>
+
+    <!-- Form to add a new record -->
+    <form id="addForm">
+      <h2>Add New Record</h2>
+      <label for="ssid">SSID:</label>
+      <input type="text" id="ssid" placeholder="Enter SSID" required>
+
+      <label for="password">Password:</label>
+      <input type="text" id="password" placeholder="Enter Password" required>
+
+      <label for="ip">IP Address:</label>
+      <input type="text" id="ip" placeholder="Enter IP Address" required>
+
+      <label for="devices">Devices Connected:</label>
+      <input type="text" id="devices" placeholder="Enter Devices" required>
+
+      <button type="submit">Add Record</button>
+    </form>
+
+    <!-- Display inventory records -->
+    <div id="inventory">
+      <h2>Inventory Records</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>SSID</th>
+            <th>Password</th>
+            <th>IP Address</th>
+            <th>Devices Connected</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="recordsTable">
+          <!-- Records will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+<script>
+    // Get DOM elements
+const addForm = document.getElementById("addForm");
+const recordsTable = document.getElementById("recordsTable");
+
+// Load records from local storage when the page loads
+document.addEventListener("DOMContentLoaded", loadRecords);
+
+// Function to load records from local storage
+function loadRecords() {
+  const records = JSON.parse(localStorage.getItem("wifiRecords")) || [];
+  recordsTable.innerHTML = ""; // Clear the table
+
+  records.forEach((record, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${record.ssid}</td>
+      <td>${record.password}</td>
+      <td>${record.ip}</td>
+      <td>${record.devices}</td>
+      <td>
+        <button class="delete-btn" onclick="deleteRecord(${index})">Delete</button>
+      </td>
+    `;
+    recordsTable.appendChild(row);
+  });
+}
+
+// Function to add a new record
+addForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const ssid = document.getElementById("ssid").value;
+  const password = document.getElementById("password").value;
+  const ip = document.getElementById("ip").value;
+  const devices = document.getElementById("devices").value;
+
+  const record = { ssid, password, ip, devices };
+
+  // Save to local storage
+  const records = JSON.parse(localStorage.getItem("wifiRecords")) || [];
+  records.push(record);
+  localStorage.setItem("wifiRecords", JSON.stringify(records));
+
+  // Reload records
+  loadRecords();
+
+  // Clear the form
+  addForm.reset();
+});
+
+// Function to delete a record
+function deleteRecord(index) {
+  const records = JSON.parse(localStorage.getItem("wifiRecords"));
+  records.splice(index, 1); // Remove the record at the specified index
+  localStorage.setItem("wifiRecords", JSON.stringify(records));
+  loadRecords(); // Reload records
+}
+  </script>
+  
+  <footer>
+    <button onclick="login.html"style="width:10px; height:30px; padding:none;">
+      TOP UP VOUCHER CODE 
+  </footer>
+
+
+</body>
+</html>
