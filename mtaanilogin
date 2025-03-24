@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIRELESS FIDELITY MTAANI</title>
+    
+    <style>
+        button{
+            padding:10px;
+            text-align: center;
+            margin-top: 38px;
+            margin-left: 40px;
+        }
+
+        body{
+            background-color:darkorange;
+            
+        }
+        div{
+          border:none;
+        }
+        .snow{
+          position:absolute;
+          top:-10px;
+          color:green;
+          font-size:24px;
+          animation:fall linear infinite;
+        }
+        h1{
+          color:lawngreen;
+          animation:pursue 1s linear infinite;
+        }
+        @keyframes purse{
+          0%{
+            transform:scale(0)
+          }
+          100%{
+            transform:scale(1)
+          }
+        }
+        @keyframes fall {
+          0%{
+            top:-10px;
+            opacity:1;
+            transform:scale(1)
+
+          }
+          100%{
+            top:100vh;
+            opacity:0;
+            transform:scale(2)
+          }
+        }
+       
+    </style>
+</head>
+<body>
+    
+    <div id="snow">
+        <h1 ><center> WIFI MTAANI STAY CONNECTED</center></h1>
+        <form>
+            <label>
+              <script>
+                snowFlake ()
+                </script>
+                <div class="wifi-container" >
+        
+                <center>Enter your Voucher or Access Code to connect to Internet: </center>
+            </label><br>
+           <center> <Input type="password"name="pass"placeholder="Input accesss code"></center>
+        </form>
+    <center><p>FOR ASSISTANCE CALL OR WHATSAPP :0741997261 </p></center>
+    <center><button><B>CLICK TO SELECT  </B> </button></center>
+    <div style>
+        <div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 15 </p></div>
+        <div style="background-color: orangered;">  1 Hours <p>1 device</p><p>1 HOURS VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+
+      <div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 25 </p></div>
+        <div style="background-color: orangered;">  4 Hours <p>1 device</p><p>4 HOURS VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+
+  <div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:;padding:25px; border-radius:50%; "> <p> kes 30 </p></div>
+        <div style="background-color: orangered;">  12 Hours <p>1 device</p><p>12 HOURS VALIDITY</p></div>
+        <div style="background-color: orangered;color: darkorange;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div>   
+      <div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 40 </p></div>
+        <div style="background-color: orangered;">  Daily <p>1 device</p><p> Unlimited</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> >
+
+
+<div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 50 </p></div>
+        <div style="background-color: orangered;">  DAILY <p>2 devices</p><p>DAILY VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+   <div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 80 </p></div>
+        <div style="background-color: orangered;">  DAILY <p>3 deviceS</p><p>UNLIMITED VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+<div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 250 </p></div>
+        <div style="background-color: orangered;">  WEEKLY <p>1 device</p><p>UNLIMITED VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+<div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 450 </p></div>
+        <div style="background-color: orangered;"> WEEKLY <p>2 devices</p><p>UNLIMITED VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> <div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 800 </p></div>
+        <div style="background-color: orangered;">  1 Month <p>1 device</p><p>NONTHLY VALIDITY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+
+</div>
+<div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 1000 </p></div>
+        <div style="background-color: orangered;">  1 Month <p>2 devices</p><p>UNLIMITED MONTHLY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+      </div> 
+<div style="
+        margin-top: 30px;
+        display: grid;
+        text-align: center;
+        column-gap:20px;
+        grid-template-columns: 80px 1fr 1fr;
+      ">
+        <div style="background-color:orangered;padding:25px; border-radius:50%; "> <p> kes 1200 </p></div>
+        <div style="background-color: orangered;">  1 Month <p>3 devices</p><p>UNLIMITED MONTHLY</p></div>
+        <div style="background-color: orangered;"><button onClick="alert( 'PaymentRequest'); ">SUBSCRIBE</button></div>
+        
+     
+
+
+
+
+
+
+</div>
+
+    <script>
+      function create snowFlake(){
+        const snowflake=document.createElement('div');
+
+        snowflake.classLisst.add('snowflake');
+        snowflake.innerText='';
+
+        snowflake.style.left=Math.random()*window.innerWidth+'px';
+        snowflake.style.animationDuration=Math.random()*3+2+'s';
+
+        snowflake.style.fontSize=Math.random()*10+15+'px';
+
+        document.getElementById('snowflakes').appendChild(snowflake);
+
+        setTimeout=>({
+          snowFlake.remove();
+        },5000);
+
+       setInterval(createSnowflake,200);
+      }
+      </script>
+    <footer>
+        <p style="text-align:center;">Copyright WI-FI MTAANI &copy 2025 powered by Scott</p>
+    </footer>
+
+</body>
+</html>
