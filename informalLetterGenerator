@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Letter Generator (Formal & Informal)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {
+      background: #f7f9fb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 680px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 20px rgba(30,60,120,0.09);
+      padding: 2.2rem 2.3rem 2.5rem;
+    }
+    h1 {
+      text-align: center;
+      color: #234c7c;
+      margin-bottom: 1.2rem;
+      font-family: 'Segoe UI Semibold', sans-serif;
+      letter-spacing: 1px;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      padding: 0.8rem 2.5rem;
+      border: none;
+      background: #e6eaf3;
+      color: #234c7c;
+      font-weight: bold;
+      font-size: 1.09rem;
+      letter-spacing: 0.5px;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      margin-right: 4px;
+      transition: background 0.2s;
+    }
+    .tab-btn.active {
+      background: #234c7c;
+      color: #fff;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-bottom: 2.2rem;
+    }
+    label {
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 2px;
+      display: block;
+    }
+    input, textarea, select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c9db;
+      width: 100%;
+      outline: none;
+      transition: border 0.2s;
+      font-family: inherit;
+      resize: vertical;
+    }
+    textarea {
+      min-height: 60px;
+      max-height: 220px;
+    }
+    input:focus, textarea:focus, select:focus {
+      border: 1.5px solid #234c7c;
+    }
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 0.7rem 0;
+      background: #234c7c;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 1.09rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    button[type="submit"]:hover {
+      background: #16365a;
+    }
+    .letter-box {
+      background: #fafbfe;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(50,80,170,0.07);
+      padding: 2.1rem 2.3rem;
+      margin-top: 2.5rem;
+      font-family: 'Georgia', 'Times New Roman', Times, serif;
+      color: #242e42;
+      min-height: 360px;
+      position: relative;
+      overflow-x: auto;
+    }
+    .ltr-addr {
+      text-align: right;
+      margin-bottom: 0.5em;
+      white-space: pre-line;
+      font-size: 1.02em;
+    }
+    .ltr-date {
+      text-align: right;
+      margin-bottom: 1.2em;
+      font-size: 1.01em;
+    }
+    .ltr-addr-recv {
+      text-align: left;
+      margin-bottom: 1.2em;
+      white-space: pre-line;
+      font-size: 1.02em;
+    }
+    .ltr-subject {
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 1em;
+      color: #274f8c;
+      font-size: 1.04em;
+    }
+    .ltr-body {
+      margin-bottom: 1.5em;
+      white-space: pre-line;
+      font-size: 1.04em;
+    }
+    .ltr-sign {
+      margin-top: 2.2em;
+      text-align: right;
+      font-size: 1.05em;
+      font-family: inherit;
+    }
+    .ltr-sign .signoff {
+      margin-bottom: 1.5em;
+      display: block;
+      font-family: inherit;
+    }
+    .ltr-sign .sig-name {
+      font-weight: bold;
+      font-family: cursive, 'Segoe Script', 'Comic Sans MS', sans-serif;
+      font-size: 1.08em;
+      letter-spacing: 1px;
+    }
+    /* Responsive */
+    @media (max-width: 560px) {
+      .container, .letter-box {
+        padding: 1.1rem 0.7rem 1.5rem;
+      }
+      .ltr-addr, .ltr-date, .ltr-addr-recv, .ltr-body, .ltr-sign {
+        font-size: 0.99em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Letter Generator</h1>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="informal">Informal Letter</button>
+      <button class="tab-btn" data-tab="formal">Formal Letter</button>
+    </div>
+    <!-- Informal Letter Form -->
+    <form id="informalForm">
+      <label>Sender’s Address:</label>
+      <textarea id="infSenderAddr" required></textarea>
+      <label>Date:</label>
+      <input type="date" id="infDate" required>
+      <label>Recipient Name (Greeting):</label>
+      <input type="text" id="infGreeting" placeholder="e.g., John" required>
+      <label>Introduction (ask about their well-being):</label>
+      <textarea id="infIntro" placeholder="How have you been? Hope you are doing well." required></textarea>
+      <label>Main Message (Body):</label>
+      <textarea id="infBody" placeholder="Write your main message here..." required></textarea>
+      <label>Conclusion (wrap up):</label>
+      <textarea id="infConclusion" placeholder="Hope to hear from you soon." required></textarea>
+      <label>Sign-off:</label>
+      <select id="infSignoff" required>
+        <option value="Yours sincerely,">Yours sincerely,</option>
+        <option value="Love,">Love,</option>
+        <option value="Best wishes,">Best wishes,</option>
+        <option value="Regards,">Regards,</option>
+      </select>
+      <label>Your Name (Signature - alphabets only):</label>
+      <input type="text" id="infSignature" pattern="[A-Za-z\s]+" required>
+      <button type="submit">Generate Informal Letter</button>
+    </form>
+    <!-- Formal Letter Form -->
+    <form id="formalForm" style="display:none;">
+      <label>Sender’s Address:</label>
+      <textarea id="forSenderAddr" required></textarea>
+      <label>Date:</label>
+      <input type="date" id="forDate" required>
+      <label>Receiver’s Address:</label>
+      <textarea id="forReceiverAddr" required></textarea>
+      <label>Salutation:</label>
+      <input type="text" id="forSalutation" placeholder="e.g., Dear Sir/Madam," required>
+      <label>Subject Line (optional):</label>
+      <input type="text" id="forSubject" placeholder="Subject (optional)">
+      <label>Introduction:</label>
+      <textarea id="forIntro" placeholder="State your purpose briefly." required></textarea>
+      <label>Details / Supporting Info:</label>
+      <textarea id="forDetails" placeholder="Provide additional info." required></textarea>
+      <label>Conclusion / Request:</label>
+      <textarea id="forConclusion" placeholder="Conclude or make a request." required></textarea>
+      <label>Complimentary Close:</label>
+      <select id="forClose" required>
+        <option value="Yours faithfully,">Yours faithfully,</option>
+        <option value="Yours sincerely,">Yours sincerely,</option>
+        <option value="Respectfully,">Respectfully,</option>
+        <option value="Regards,">Regards,</option>
+      </select>
+      <label>Full Name (Signature - alphabets only):</label>
+      <input type="text" id="forSignature" pattern="[A-Za-z\s]+" required>
+      <button type="submit">Generate Formal Letter</button>
+    </form>
+    <div id="letterOutput"></div>
+  </div>
+  <script>
+    // Tab switching
+    const informalForm = document.getElementById('informalForm');
+    const formalForm = document.getElementById('formalForm');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+      btn.onclick = function() {
+        tabBtns.forEach(b=>b.classList.remove('active'));
+        this.classList.add('active');
+        if(this.dataset.tab === 'informal') {
+          informalForm.style.display = '';
+          formalForm.style.display = 'none';
+          document.getElementById('letterOutput').innerHTML = '';
+        } else {
+          informalForm.style.display = 'none';
+          formalForm.style.display = '';
+          document.getElementById('letterOutput').innerHTML = '';
+        }
+      }
+    });
+
+    // Helper: Format date to e.g. 23 May 2025
+    function formatDate(isoDate) {
+      if (!isoDate) return '';
+      const d = new Date(isoDate);
+      return d.toLocaleDateString(undefined, {day:'2-digit', month:'long', year:'numeric'});
+    }
+
+    // Informal Letter Generation
+    informalForm.onsubmit = function(e) {
+      e.preventDefault();
+      // Validate signature
+      const signature = document.getElementById('infSignature').value.trim();
+      if(!/^[A-Za-z\s]+$/.test(signature)) {
+        alert('Signature: Alphabets only.');
+        return;
+      }
+      const addr = document.getElementById('infSenderAddr').value.trim();
+      const date = formatDate(document.getElementById('infDate').value);
+      const greeting = document.getElementById('infGreeting').value.trim();
+      const intro = document.getElementById('infIntro').value.trim();
+      const body = document.getElementById('infBody').value.trim();
+      const conclusion = document.getElementById('infConclusion').value.trim();
+      const signoff = document.getElementById('infSignoff').value;
+      // Letter HTML
+      const html = `
+      <div class="letter-box">
+        <div class="ltr-addr">${addr.replace(/\n/g,"<br>")}</div>
+        <div class="ltr-date">${date}</div>
+        <div class="ltr-body">
+          <span>Dear ${greeting},</span>
+          <br><br>
+          ${intro}<br><br>
+          ${body}<br><br>
+          ${conclusion}
+        </div>
+        <div class="ltr-sign">
+          <span class="signoff">${signoff}</span>
+          <span class="sig-name">${signature}</span>
+        </div>
+      </div>
+      `;
+      document.getElementById('letterOutput').innerHTML = html;
+      document.getElementById('letterOutput').scrollIntoView({behavior:"smooth"});
+    };
+
+    // Formal Letter Generation
+    formalForm.onsubmit = function(e) {
+      e.preventDefault();
+      // Validate signature
+      const signature = document.getElementById('forSignature').value.trim();
+      if(!/^[A-Za-z\s]+$/.test(signature)) {
+        alert('Signature: Alphabets only.');
+        return;
+      }
+      const addr = document.getElementById('forSenderAddr').value.trim();
+      const date = formatDate(document.getElementById('forDate').value);
+      const recvAddr = document.getElementById('forReceiverAddr').value.trim();
+      const salutation = document.getElementById('forSalutation').value.trim();
+      const subject = document.getElementById('forSubject').value.trim();
+      const intro = document.getElementById('forIntro').value.trim();
+      const details = document.getElementById('forDetails').value.trim();
+      const conclusion = document.getElementById('forConclusion').value.trim();
+      const close = document.getElementById('forClose').value;
+      // Letter HTML
+      const html = `
+      <div class="letter-box">
+        <div class="ltr-addr">${addr.replace(/\n/g,"<br>")}</div>
+        <div class="ltr-date">${date}</div>
+        <div class="ltr-addr-recv">${recvAddr.replace(/\n/g,"<br>")}</div>
+        ${subject ? `<div class="ltr-subject">Subject: ${subject}</div>` : ""}
+        <div class="ltr-body">
+          <span>${salutation}</span>
+          <br><br>
+          ${intro}<br><br>
+          ${details}<br><br>
+          ${conclusion}
+        </div>
+        <div class="ltr-sign">
+          <span class="signoff">${close}</span>
+          <span class="sig-name">${signature}</span>
+        </div>
+      </div>
+      `;
+      document.getElementById('letterOutput').innerHTML = html;
+      document.getElementById('letterOutput').scrollIntoView({behavior:"smooth"});
+    };
+  </script>
+</body>
+</html>
