@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Set Operations</title>
+  <style>
+    :root {
+      --primary-color: #1976d2;
+      --secondary-color: #388e3c;
+      --background-color: #f5f5f5;
+      --surface-color: #ffffff;
+      --error-color: #d32f2f;
+      --on-surface: #212121;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--background-color);
+      color: var(--on-surface);
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background-color: var(--surface-color);
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h1, h2 {
+      color: var(--primary-color);
+      margin: 16px 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin: 16px 0 8px;
+      color: var(--on-surface);
+    }
+
+    select, input[type="text"] {
+      width: 92%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(25,118,210,0.2);
+    }
+
+    .subsets div {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0;
+    }
+
+    .subsetInput {
+      flex: 1;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #addSubsetBtn {
+      background-color: var(--secondary-color);
+      color: white;
+      margin: 16px 0;
+    }
+
+    .removeSubsetBtn {
+      background-color: var(--error-color);
+      color: white;
+    }
+
+    #operationsList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    #operationsList div {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    #operationsList div:hover {
+      background-color: rgba(25,118,210,0.1);
+      border-color: var(--primary-color);
+    }
+
+    #resultArea {
+      background-color: var(--background-color);
+      padding: 16px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      min-height: 100px;
+    }
+
+    .material-icons {
+      font-size: 18px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 16px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Set Operations</h1>
+
+    <label for="universalSelect">Choose Universal Set</label>
+    <select id="universalSelect" name="universalSelect">
+      <option value="natural">Natural Numbers (N)</option>
+      <option value="integers">Integers (Z)</option>
+      <option value="rationals">Rational Numbers (Q)</option>
+      <option value="reals">Real Numbers (R)</option>
+      <option value="manual">Enter Manually</option>
+    </select>
+
+    <label for="manualUniversal" id="manualLabel" style="display:none;">Enter Universal Set (comma separated)</label>
+    <input type="text" id="manualUniversal" name="manualUniversal" placeholder="e.g. 1,2,3,4,5" style="display:none;" />
+
+    <div class="subsets">
+      <label>Subsets of Universal Set</label>
+      <div>
+        <input type="text" class="subsetInput" placeholder="Enter subset (comma separated)" />
+        <button class="removeSubsetBtn" type="button">
+          
+          Remove
+        </button>
+      </div>
+    </div>
+    <button id="addSubsetBtn" type="button">
+      <span class="material-icons">add</span>
+      Add Another Subset
+    </button>
+
+    <label for="operationSearch">Select Operation</label>
+    <input type="text" id="operationSearch" placeholder="Search operations..." autocomplete="off" />
+
+    <div id="operationsList">
+      <div data-op="union">Union</div>
+      <div data-op="intersection">Intersection</div>
+      <div data-op="differenceAB">Difference (A - B)</div>
+      <div data-op="differenceBA">Difference (B - A)</div>
+      <div data-op="symmetricDifference">Symmetric Difference</div>
+      <div data-op="complementA">Complement (of A)</div>
+      <div data-op="complementB">Complement (of B)</div>
+      <div data-op="cartesianProduct">Cartesian Product (A × B)</div>
+      <div data-op="subsetCheck">Subset Check (A ⊆ B)</div>
+      <div data-op="supersetCheck">Superset Check (A ⊇ B)</div>
+      <div data-op="equalityCheck">Equality Check (A = B)</div>
+    </div>
+
+    <h2>Result</h2>
+    <pre id="resultArea"></pre>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const universalSelect = document.getElementById("universalSelect");
+  const manualLabel = document.getElementById("manualLabel");
+  const manualUniversal = document.getElementById("manualUniversal");
+  const subsetsDiv = document.querySelector(".subsets");
+  const addSubsetBtn = document.getElementById("addSubsetBtn");
+  const operationSearch = document.getElementById("operationSearch");
+  const operationsList = document.getElementById("operationsList");
+  const resultArea = document.getElementById("resultArea");
+
+  // Predefined universal sets as arrays of strings for simplicity
+  const predefinedUniversals = {
+    natural: [...Array(20).keys()].map(n => (n + 1).toString()), // 1 to 20
+    integers: [...Array(41).keys()].map(n => (n - 20).toString()), // -20 to 20
+    rationals: ["1/2", "2/3", "3/4", "4/5", "5/6"], // sample rationals
+    reals: ["π", "e", "√2", "0", "1", "2", "3"], // sample reals
+  };
+
+  // Current universal set (array of strings)
+  let universalSet = predefinedUniversals.natural.slice();
+
+  // Current subsets (array of arrays)
+  let subsets = [];
+
+  // Utility: parse comma separated string into trimmed unique array
+  function parseSet(str) {
+    if (!str) return [];
+    return Array.from(new Set(
+      str.split(",").map(s => s.trim()).filter(s => s !== "")
+    ));
+  }
+
+  // Update universal set based on select or manual input
+  function updateUniversalSet() {
+    const val = universalSelect.value;
+    if (val === "manual") {
+      manualLabel.style.display = "block";
+      manualUniversal.style.display = "block";
+      universalSet = parseSet(manualUniversal.value);
+    } else {
+      manualLabel.style.display = "none";
+      manualUniversal.style.display = "none";
+      universalSet = predefinedUniversals[val] ? predefinedUniversals[val].slice() : [];
+    }
+  }
+
+  // Add a new subset input row
+  function addSubsetInput(value = "") {
+    const div = document.createElement("div");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "subsetInput";
+    input.placeholder = "Enter subset (comma separated)";
+    input.value = value;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Remove";
+    btn.className = "removeSubsetBtn";
+
+    btn.addEventListener("click", () => {
+      div.remove();
+      updateSubsetsFromInputs();
+    });
+
+    input.addEventListener("input", updateSubsetsFromInputs);
+
+    div.appendChild(input);
+    div.appendChild(btn);
+    subsetsDiv.appendChild(div);
+    updateSubsetsFromInputs();
+  }
+
+  // Update subsets array from all subset inputs
+  function updateSubsetsFromInputs() {
+    subsets = [];
+    const inputs = subsetsDiv.querySelectorAll("input.subsetInput");
+    inputs.forEach(input => {
+      subsets.push(parseSet(input.value));
+    });
+  }
+
+  // Filter operations list by search term
+  function filterOperations(searchTerm) {
+    const ops = operationsList.querySelectorAll("div[data-op]");
+    const term = searchTerm.trim().toLowerCase();
+    ops.forEach(opDiv => {
+      const text = opDiv.textContent.toLowerCase();
+      opDiv.style.display = text.includes(term) ? "" : "none";
+    });
+  }
+
+  // Perform set operations (assuming 2 subsets at least)
+  function performOperation(operation) {
+    if (subsets.length < 2 && 
+        !["complementA", "complementB"].includes(operation)) {
+      return "Please enter at least two subsets for this operation.";
+    }
+    const A = subsets[0] || [];
+    const B = subsets[1] || [];
+
+    // Helper functions
+    const union = (a, b) => Array.from(new Set([...a, ...b]));
+    const intersection = (a, b) => a.filter(x => b.includes(x));
+    const difference = (a, b) => a.filter(x => !b.includes(x));
+    const symmetricDifference = (a, b) => difference(union(a, b), intersection(a, b));
+    const complement = (a) => difference(universalSet, a);
+    const cartesianProduct = (a, b) => {
+      let result = [];
+      a.forEach(x => b.forEach(y => result.push(`(${x},${y})`)));
+      return result;
+    };
+    const isSubset = (a, b) => a.every(x => b.includes(x));
+    const isSuperset = (a, b) => b.every(x => a.includes(x));
+    const isEqual = (a, b) => isSubset(a, b) && isSuperset(a, b);
+
+    switch (operation) {
+      case "union":
+        return union(A, B).join(", ");
+      case "intersection":
+        return intersection(A, B).join(", ");
+      case "differenceAB":
+        return difference(A, B).join(", ");
+      case "differenceBA":
+        return difference(B, A).join(", ");
+      case "symmetricDifference":
+        return symmetricDifference(A, B).join(", ");
+      case "complementA":
+        return complement(A).join(", ");
+      case "complementB":
+        return complement(B).join(", ");
+      case "cartesianProduct":
+        return cartesianProduct(A, B).join(", ");
+      case "subsetCheck":
+        return isSubset(A, B) ? "Yes, A ⊆ B" : "No, A ⊈ B";
+      case "supersetCheck":
+        return isSuperset(A, B) ? "Yes, A ⊇ B" : "No, A ⊉ B";
+      case "equalityCheck":
+        return isEqual(A, B) ? "Yes, A = B" : "No, A ≠ B";
+      default:
+        return "Unknown operation.";
+    }
+  }
+
+  // Event listeners:
+
+  // Update universal set on select change
+  universalSelect.addEventListener("change", () => {
+    updateUniversalSet();
+    updateSubsetsFromInputs();
+    resultArea.textContent = "";
+  });
+
+  // Update universal set on manual input change
+  manualUniversal.addEventListener("input", () => {
+    updateUniversalSet();
+    updateSubsetsFromInputs();
+    resultArea.textContent = "";
+  });
+
+  // Add subset button
+  addSubsetBtn.addEventListener("click", () => {
+    addSubsetInput();
+  });
+
+  // Filter operation list as user types
+  operationSearch.addEventListener("input", () => {
+    filterOperations(operationSearch.value);
+  });
+
+  // Click on operation to perform it
+  operationsList.addEventListener("click", (e) => {
+    if (e.target.dataset.op) {
+      // Remove previous selection
+      operationsList.querySelectorAll("div").forEach(d => d.classList.remove("selected"));
+      e.target.classList.add("selected");
+
+      updateSubsetsFromInputs();
+
+      const op = e.target.dataset.op;
+      const res = performOperation(op);
+      resultArea.textContent = res;
+    }
+  });
+
+  // Initialize with one subset input
+  addSubsetInput();
+
+  // Initialize universal set
+  updateUniversalSet();
+  filterOperations(""); // show all operations
+});
+</script>
+</body>
+</html>
