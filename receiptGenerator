@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Receipt Generator</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {
+      background: #f3f6fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 480px;
+      margin: 48px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 32px rgba(0,30,90,0.12);
+      padding: 2.2rem 2.3rem 2.5rem;
+    }
+    h1 {
+      text-align: center;
+      color: #2156a0;
+      margin-bottom: 2rem;
+      font-family: 'Segoe UI Semibold', sans-serif;
+      letter-spacing: 1px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    label {
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 2px;
+    }
+    input {
+      padding: 0.55rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c9db;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input:focus {
+      border: 1.5px solid #2156a0;
+    }
+    button {
+      padding: 0.7rem 0;
+      margin-top: 10px;
+      background: #2156a0;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    button:hover {
+      background: #153d6f;
+    }
+    #receiptBox {
+      margin-top: 2.5rem;
+      display: none;
+      background: #fefefe;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(30,80,180,0.11);
+      padding: 0;
+      font-family: 'Courier New', Courier, monospace;
+      color: #26314f;
+      width: 100%;
+    }
+    .receipt {
+      max-width: 370px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1.2px dashed #ccc;
+      border-radius: 10px;
+      box-shadow: 0 1.5px 10px rgba(70,100,170,0.09);
+      padding: 28px 35px 18px 35px;
+      position: relative;
+      overflow: hidden;
+    }
+    .receipt::before, .receipt::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; height: 12px;
+      background: repeating-linear-gradient(
+        to right, #fafafc 0 4px, #e2e6f3 4px 8px
+      );
+      z-index: 1;
+    }
+    .receipt::before {
+      top: -12px;
+      border-radius: 10px 10px 0 0;
+    }
+    .receipt::after {
+      bottom: -12px;
+      border-radius: 0 0 10px 10px;
+    }
+    .r-logo {
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    .r-logo img {
+      width: 54px;
+      opacity: 0.93;
+    }
+    .receipt-title {
+      text-align: center;
+      font-size: 1.33rem;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+      color: #2156a0;
+      letter-spacing: 0.5px;
+    }
+    .receipt-company {
+      text-align: center;
+      color: #333b54;
+      font-size: 1.07rem;
+      font-weight: 500;
+      margin-bottom: 1.1rem;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.48rem;
+      font-size: 1rem;
+    }
+    .receipt-label {
+      color: #747b92;
+    }
+    .receipt-value {
+      color: #212a45;
+      font-weight: 500;
+    }
+    .receipt-sep {
+      border-top: 1.4px dashed #e3e6f4;
+      margin: 1.15rem 0 1rem 0;
+    }
+    .receipt-total {
+      margin-top: 0.7rem;
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.18rem;
+      color: #1b7b3a;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+    }
+    .receipt-footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.93rem;
+      margin-top: 1.2rem;
+      letter-spacing: 0.2px;
+    }
+    .receipt-signature-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.7rem;
+      margin-bottom: 0.2rem;
+    }
+    .receipt-signature {
+      border-top: 1.1px solid #aaa;
+      width: 120px;
+      text-align: center;
+      font-size: 0.98rem;
+      color: #888;
+      margin-right: 0.35rem;
+      padding-top: 2px;
+    }
+    @media (max-width: 520px) {
+      .container {
+        max-width: 99vw;
+        padding: 1.1rem 0.7rem 1.5rem;
+      }
+      .receipt {
+        padding: 15px 6vw 12px 6vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Receipt Generator</h1>
+    <form id="receiptForm" autocomplete="off">
+      <label for="name">Name:</label>
+      <input id="name" type="text" required>
+
+      <label for="address">Address:</label>
+      <input id="address" type="text" required>
+
+      <label for="number">Phone Number:</label>
+      <input id="number" type="text" required pattern="[\d\s\-\+\(\)]*">
+
+      <label for="company">Company Name:</label>
+      <input id="company" type="text" required>
+
+      <label for="amount">Amount:</label>
+      <input id="amount" type="number" required min="0" step="0.01">
+
+      <button type="submit">Generate Receipt</button>
+    </form>
+    <div id="receiptBox"></div>
+  </div>
+  <script>
+    document.getElementById('receiptForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Get values
+      const name = document.getElementById('name').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const number = document.getElementById('number').value.trim();
+      const company = document.getElementById('company').value.trim();
+      const amount = parseFloat(document.getElementById('amount').value).toFixed(2);
+
+      // Generate receipt number and date
+      const now = new Date();
+      const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+      const receiptNum = 'RCPT-' + now.getFullYear()
+        + String(now.getMonth() + 1).padStart(2, '0')
+        + String(now.getDate()).padStart(2, '0')
+        + '-' + Math.floor(1000 + Math.random() * 9000);
+
+      // Optional: Logo SVG (can replace with an <img> src if you want)
+      const logoSVG = `<svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="54" height="54" rx="12" fill="#e6f2ff"/>
+  <path d="M15 39V21C15 17.6863 17.6863 15 21 15H33C36.3137 15 39 17.6863 39 21V39" stroke="#2156a0" stroke-width="2"/>
+  <rect x="22" y="26" width="10" height="8" rx="2" fill="#2156a0"/>
+  <circle cx="27" cy="22" r="2" fill="#2156a0"/>
+  </svg>`;
+
+      // Build receipt HTML
+      const html = `
+        <div class="receipt">
+          <div class="r-logo">${logoSVG}</div>
+          <div class="receipt-title">PAYMENT RECEIPT</div>
+          <div class="receipt-company">${company}</div>
+          <div class="receipt-row"><span class="receipt-label">Receipt No:</span><span class="receipt-value">${receiptNum}</span></div>
+          <div class="receipt-row"><span class="receipt-label">Date:</span><span class="receipt-value">${dateStr}</span></div>
+          <div class="receipt-sep"></div>
+          <div class="receipt-row"><span class="receipt-label">Received From:</span><span class="receipt-value">${name}</span></div>
+          <div class="receipt-row"><span class="receipt-label">Address:</span><span class="receipt-value">${address}</span></div>
+          <div class="receipt-row"><span class="receipt-label">Phone:</span><span class="receipt-value">${number}</span></div>
+          <div class="receipt-sep"></div>
+          <div class="receipt-total">Amount Paid: $${amount}</div>
+          <div class="receipt-signature-row">
+            <div class="receipt-signature">Authorized</div>
+          </div>
+          <div class="receipt-footer">Thank you for your payment!</div>
+        </div>
+      `;
+
+      // Display receipt
+      const box = document.getElementById('receiptBox');
+      box.innerHTML = html;
+      box.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
