@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>💖 Love Meter 💖</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ff9aa2, #ffb6b9);
+      font-family: 'Comic Sans MS', cursive;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 3em;
+      color: #fff0f5;
+      text-shadow: 2px 2px #ff4d6d;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      border: pink;
+      border-radius: 10px;
+      font-size: 1em;
+      width: 70%;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: pink;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 1.8em;
+      color: #fff;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <h1>💘 LOVE METER 💘</h1>
+  <input type="text" id="name1" placeholder="Your Name "><br>
+  <input type="text" id="name2" placeholder="Crush's Name "><br>
+  <button onclick="checkLove()">Check Love 💞</button>
+  <div id="result"></div>
+
+  <script>
+    function checkLove() {
+      let name1 = document.getElementById("name1").value.trim();
+      let name2 = document.getElementById("name2").value.trim();
+      let result = document.getElementById("result");
+
+      if (name1 === "" || name2 === "") {
+        result.innerHTML = "Enter both names, cutie! 😜";
+        return;
+      }
+
+      let lovePercent = Math.floor(Math.random() * 101);
+      let message = "";
+
+      if (lovePercent <= 20) message = "💔 Try again next century 😭";
+      else if (lovePercent <= 40) message = "✨ There’s a lil spark… maybe 💬";
+      else if (lovePercent <= 70) message = "💖 This could be real! 🌸";
+      else if (lovePercent <= 90) message = "😍 Ooooh, someone’s in LOVE!";
+      else message = "💍 SOULMATES CONFIRMED 🔥💘";
+
+      result.innerHTML = `<p>${name1} ❤️ ${name2}</p>
+                          <p>Love Score: <strong>${lovePercent}%</strong></p>
+                          <p>${message}</p>`;
+    }
+  </script>
+</body>
+</html>
