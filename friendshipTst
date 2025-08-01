@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Friendship Test 🤝</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f172a;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 7vw;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    p {
+      font-size: 4vw;
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    input {
+      padding: 14px;
+      margin: 10px 0;
+      font-size: 16px;
+      width: 85vw;
+      max-width: 320px;
+      border: 1px solid #475569;
+      background-color: #1e293b;
+      color: #f1f5f9;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #38bdf8;
+      color: #0f172a;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0ea5e9;
+      transform: scale(1.03);
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 5vw;
+      font-weight: bold;
+      text-align: center;
+      min-height: 80px;
+    }
+
+    .progress {
+      margin-top: 20px;
+      width: 85vw;
+      max-width: 320px;
+      height: 18px;
+      background: #334155;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: #4ade80;
+      transition: width 2s ease-out;
+      border-radius: 15px;
+    }
+
+    .emoji {
+      font-size: 12vw;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Friendship Test 🤝</h1>
+  <p>Discover the strength of your friendship!</p>
+
+  <input type="text" id="name1" placeholder="Your name">
+  <input type="text" id="name2" placeholder="Their name">
+  <button onclick="calculateFriendship()">Calculate 🔍</button>
+
+  <div class="result" id="result"></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="emoji" id="emoji"></div>
+
+  <script>
+    // Simple hash function for string → number
+    function stringHash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0; // Convert to 32bit integer
+      }
+      return Math.abs(hash);
+    }
+
+    function calculateFriendship() {
+      const name1 = document.getElementById("name1").value.trim().toLowerCase();
+      const name2 = document.getElementById("name2").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+      const emoji = document.getElementById("emoji");
+      const bar = document.getElementById("bar");
+
+      if (!name1 || !name2) {
+        result.innerText = "Please enter both names.";
+        emoji.innerText = "⚠️";
+        bar.style.width = "0%";
+        return;
+      }
+
+      // Combine names in alphabetical order to ensure symmetry
+      const combined = [name1, name2].sort().join('');
+      let rawScore = stringHash(combined) % 101;
+
+      // Artificial boost if score is too low (fun version)
+      if (rawScore < 35) rawScore += 40;
+      if (rawScore > 100) rawScore = 100;
+
+      // Message
+      let message = "";
+      if (rawScore > 95) message = "Inseparable minds 🧠";
+      else if (rawScore > 85) message = "Best friends forever 🔒";
+      else if (rawScore > 70) message = "Strong bond 💪";
+      else if (rawScore > 50) message = "Good friendship 🙂";
+      else if (rawScore > 35) message = "Some room to grow 🤔";
+      else message = "Questionable connection 🥶";
+
+      // Emoji
+      let emojiChar = "❌";
+      if (rawScore > 95) emojiChar = "🧠";
+      else if (rawScore > 85) emojiChar = "🔥";
+      else if (rawScore > 70) emojiChar = "😎";
+      else if (rawScore > 50) emojiChar = "😊";
+      else if (rawScore > 35) emojiChar = "😐";
+      else emojiChar = "🥶";
+
+      // Animate text
+      result.innerHTML = "";
+      let displayText = `${name1.toUpperCase()} + ${name2.toUpperCase()} = ${rawScore}% - ${message}`;
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < displayText.length) {
+          result.innerHTML += displayText[i] === "\n" ? "<br>" : displayText[i];
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 20);
+
+      // Animate bar and emoji
+      bar.style.width = "0%";
+      setTimeout(() => {
+        bar.style.width = rawScore + "%";
+      }, 100);
+
+      emoji.innerText = "";
+      setTimeout(() => {
+        emoji.innerText = emojiChar;
+      }, 700);
+    }
+  </script>
+</body>
+</html>
