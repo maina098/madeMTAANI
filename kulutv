@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haggi TV</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+    body {background:#111; color:#fff; overflow-x:hidden;}
+
+    /* Header */
+    header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:17px 20px; background:#000;
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      border-bottom:1px solid #222;
+    }
+    
+    
+    
+    
+    
+    /* Preloader */
+#preloader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+#preloader img {
+    width: 120px;
+}
+    
+    
+    
+    
+    .logo {display:flex; align-items:center;}
+    .logo img {width:35px; height:35px; margin-right:10px; border-radius:6px;}
+    .logo h1 {font-size:18px; font-weight:600;}
+    .search-icon {font-size:20px; cursor:pointer; transition:.3s;}
+    .search-icon:hover {color:#e50914;}
+    
+    
+    
+    
+    
+    
+    
+    .search-icon {font-size:20px; cursor:pointer; transition:.3s;}
+    .search-icon:hover {color:#e50914;}
+    
+    
+    
+    
+    
+    
+    .search-icon {font-size:20px; cursor:pointer; transition:.3s;}
+    .search-icon:hover {color:#e50914;}
+
+    /* Slider Search Page */
+    .search-page {
+      position:fixed; top:0; left:100%; width:100%; height:100%; background:#181818;
+      transition:0.4s ease; z-index:2000; padding:70px 20px 80px;
+    }
+    .search-page.active {left:0;}
+    .exit-icon {position:absolute; top:20px; left:20px; font-size:24px; cursor:pointer; color:#fff; transition:.3s;}
+    .exit-icon:hover {color:#e50914;}
+    .search-box {
+      width:100%; padding:12px 15px; font-size:16px;
+      border:none; border-radius:8px; margin-bottom:20px;
+      background:#333; color:#fff; outline:none;
+    }
+
+    /* Movie Grid */
+    .movies-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:15px;
+      
+      
+      
+      
+      overflow-y: hidden;
+      height: 100vh;           /* takes full viewport height */
+  overflow-y: auto;        /* vertical scrolling */
+  overflow-x: hidden;      /* prevent horizontal scroll */
+  padding: 20px;
+  box-sizing: border-box;
+      
+    }
+    .movie-card {text-align:center;}
+    .movie-card img {width:100%; border-radius:8px; transition:transform .3s;}
+    .movie-card img:hover {transform:scale(1.05);}
+    .movie-card p {margin-top:5px; font-size:14px; color:#ddd;}
+    
+    
+    
+    
+
+    /* Page Sections */
+    .content-section {
+      display:none; padding:68px 10px 20px;
+      min-height:100vh;
+    }
+    .content-section.active {display:block;}
+    
+    /* Footer Navigation */
+    footer {
+      position:fixed; bottom:0; left:0; right:0;
+      background:#000; border-top:1px solid #222;
+      display:flex; justify-content:space-around; align-items:center;
+      padding:8px 0;
+      z-index:1000;
+    }
+    footer div {
+      text-align:center; flex:1; cursor:pointer;
+      color:#888; transition:.3s;
+    }
+    footer div.active, footer div:hover {color:#e50914;}
+    footer i {
+      font-size:20px; display:block; 
+      margin-bottom:3px; /* consistent spacing */
+    }
+    footer span {
+      font-size:12px; line-height:1.2; display:block;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        /* ===== Main ===== */
+    main{flex:1;padding: 31px 0 30px; padding-top: 1px; padding-bottom: 1px;}
+
+    /* ===== Slider ===== */
+    .slider{position:relative;width:100%;max-width:800px;margin:0 auto;overflow:hidden;border-radius:12px;}
+    .slides{display:flex;transition:transform 0.6s ease;}
+    .slide{min-width:100%;position:relative;}
+    .slide img{width:100%;height:295px;object-fit:cover;display:block;}
+    .slide-info{position:absolute;bottom:20px;left:20px;background:rgba(0,0,0,0.6);padding:12px 16px;border-radius:8px;}
+    .slide-info h3{margin-bottom:8px;}
+    .slide-info button{padding:6px 14px;border:none;border-radius:5px;background:#1e90ff;color:#fff;cursor:pointer;}
+    .slide-info button:hover{background:#0d6efd;}
+    .nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:22px;padding:8px;cursor:pointer;}
+    .prev{left:10px;} .next{right:10px;}
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+            /* ===== MEDIUM SLIDERS ===== */
+    .section {
+      margin-top: 28px;
+      padding: 0 10px;
+    }
+
+    .section h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .medium-slider {
+      overflow-x: auto;
+      display: flex;
+      gap: 10px;
+      scroll-behavior: smooth;
+      
+      margin-bottom: 3px;
+    }
+
+    .medium-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .medium-item {
+      min-width: 150px;
+      flex: 0 0 auto;
+      background: #222;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .medium-item img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .medium-item p {
+      padding: 6px;
+      font-size: 14px;
+    }
+
+    @media (min-width: 768px) {
+      .big-slider {
+        height: 350px;
+      }
+      .big-slider img {
+        height: 350px;
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        .glow {
+      background: linear-gradient(45deg, #f59e0b, #84cc16, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: hue 6s infinite linear;
+    }
+    @keyframes hue { 
+      from { filter: hue-rotate(0deg);} 
+      to { filter: hue-rotate(360deg);} 
+    }
+    .price-up { animation: flashGreen 0.6s; }
+    .price-down { animation: flashRed 0.6s; }
+    @keyframes flashGreen { from{color:#22c55e;} to{color:white;} }
+    @keyframes flashRed { from{color:#ef4444;} to{color:white;} }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #map {
+      height: 100vh;
+      width: 100vw;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    h2 {
+      font-size: 28px;
+      text-align: left;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      
+      margin-top: 31px;
+    }
+
+    /* Games Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Game Card */
+    .game-card {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+    .game-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Game Image */
+    .game-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Play Icon Overlay */
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: rgba(255,255,255,0.9);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .game-card:hover .play-icon {
+      opacity: 1;
+    }
+
+    /* Game Title */
+    .game-title {
+      font-size: 14px;
+      font-weight: bold;
+      padding: 8px 5px 12px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 400px) {
+      h2 {
+        font-size: 24px;
+      }
+      .play-icon {
+        font-size: 20px;
+      }
+    }
+    
+    
+    
+    
+    
+    .banner-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #000;
+      border-radius: 10px;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      display: none;
+    }
+
+    .banner {
+      display: flex;
+      align-items: center;
+    }
+
+    .app-icon {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .app-info {
+      flex: 1;
+    }
+
+    .app-name {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .app-description {
+      font-size: 14px;
+    }
+
+    .install-btn {
+      background-color: #007bff;
+      color: #fff;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .install-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .close-btn {
+      cursor: pointer;
+      font-size: 20px;
+      margin-left: 10px;
+    } 
+    
+  </style>
+</head>
+<body>
+  
+  <!-- First Preloader -->
+<div id="preloader">
+  <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/kuku-tv-app-icon.png" alt="App Logo">
+</div>
+  
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/kuku-tv-app-icon.png" alt="App Logo">
+      <h1>Kulu TV</h1>
+    </div>
+    <i class="fas fa-search search-icon"></i>
+  </header>
+
+  <!-- Main Sections -->
+  <div id="home" class="content-section active">
+    
+    
+    
+    
+    
+    
+    
+               <!-- MAIN -->
+  <main>
+    <!-- SLIDER -->
+    <section class="slider-section">
+      <div class="slider" id="slider">
+        <div class="slides">
+          <div class="slide">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcrZgZS6xSSunR4WR8qQbS_S2U7VIlRiQ3pXr4VW7SeQ&s=10" alt="">
+            <div class="slide-info">
+              <h3>Daddy Daughter Trip</h3>
+              <button>Play</button>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr5TQEunuv-1jzQwOCFzsNa2XUzVdD67AziHVfo0z0pw&s=10" alt="">
+            <div class="slide-info">
+              <h3>Megan 2.0</h3>
+              <button>Play</button>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://picsum.photos/800/320?3" alt="">
+            <div class="slide-info">
+              <h3></h3>
+              <button>Play</button>
+            </div>
+          </div>
+        </div>
+        <button class="nav-btn prev">&#10094;</button>
+        <button class="nav-btn next">&#10095;</button>
+      </div>
+    </section>
+
+  <!-- ===== MEDIUM SLIDERS ===== -->
+  <div class="section">
+    <h2>Trending Now</h2>
+    <div class="medium-slider">
+      <div class="medium-item">
+        <img src="https://img4.hulu.com/user/v3/artwork/5f56627f-e6b7-404b-a396-9ecffc106a9d?base_image_bucket_name=image_manager&base_image=870d7f04-8218-4f44-bc70-0e0f205dae52&size=1200x630&format=webp" alt="Trending 1">
+        <p>Bad Genius</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://ntvb.tmsimg.com/assets/p8680648_b_h10_ak.jpg?w=1280&h=720" alt="Trending 2">
+        <p>2 Broke Girls</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbPZRAB-qCrG7NYOzjMX5_cd15qCjJTvllbQ&s" alt="Trending 3">
+        <p>Back On The Strip</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://ntvb.tmsimg.com/assets/p187348_b_h8_av.jpg?w=960&h=540" alt="Trending 3">
+        <p>Survivor 48</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://m.media-amazon.com/images/S/pv-target-images/b61b72decb55e254b3100fc4da62057e461d62156538af4c1c7bb57d3282ec17.jpg" alt="Trending 3">
+        <p>Ballerina</p>
+      </div>
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Popular Show</h2>
+    <div class="medium-slider">
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv3IXEUP6skBOu6T2zhOMAevQpo37BsXw1TR8qNr5Xaw&s=10" alt="Recent 1">
+        <p>Clown In A Cornfield</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/37/c7/79/37c77953-5348-189c-f04e-f7cfa5693148/MinecraftMovie_Refresh_H_DD_KA_TT_3840x2160_300dpi_EN.png/1200x675.jpg" alt="Recent 2">
+        <p>A Minecraft Movie</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://resizing.flixster.com/wEaS4VMvSHslOHMA4gNQR3zGoAo=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p27622821_b_h10_ac.jpg" alt="Recent 3">
+        <p>Batman</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://res.cloudinary.com/jerrick/image/upload/v1752476948/6874ad143d71db001d20cf28.jpg" alt="Recent 3">
+        <p>The Monkey</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd8Fg-VVssPiZPPs5-jrsVnsGyw6ZiLysmxQ&usqp=CAU" alt="Recent 3">
+        <p>Wicked</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="section">
+    <h2>Live TV</h2>
+    <div class="medium-slider">
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJVq37fcLdGu3_AkP6KE3TTqGC7nuu187aw&s" alt="Recent 1">
+        <p>Fandango</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://www.paramountplus.com/assets/pplus/PPlus_Logo_1200x630_BLUE.png" alt="Recent 2">
+        <p>Paramount +</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://provider-static.plex.tv/epg/cms/production/38fea030-41ad-4495-b0b2-69f70c748e86/24-ION-1300577902-OTT_CTV_-_ION_Rebrand_Assets_for_FAST_and_vMVPD_Platforms_PLEX-Hero-3840x2160p.jpg" alt="Recent 3">
+        <p>Ion Live</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpV7HG703wzj7KAF53IEM70h9EVvOChvoW9zAlGYKu1w&s=10" alt="Recent 3">
+        <p>Disney +</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://images.ctfassets.net/y2ske730sjqp/1aONibCke6niZhgPxuiilC/2c401b05a07288746ddf3bd3943fbc76/BrandAssets_Logos_01-Wordmark.jpg?w=940" alt="Recent 3">
+        <p>Netflix</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="section">
+    <h2>African Netflix</h2>
+    <div class="medium-slider">
+      <div class="medium-item">
+        <img src="https://i.ytimg.com/vi/OgJEJ1N4OYw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAJWYynigJwdtzeR8RDCbOJz87TUw" alt="Recent 1">
+        <p>Meet The Khumalos</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://resizing.flixster.com/eFIc77OpLN2vj1I4SUqUS9gAxU4=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p17889688_b_h10_aa.jpg" alt="Recent 2">
+        <p>Queen Sono</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://images.plex.tv/photo?size=large-1280&url=https%3A%2F%2Fmetadata-static.plex.tv%2F0%2Fgracenote%2F09814087c504e0d599225944e1fcb925.jpg" alt="Recent 3">
+        <p>Umjolo The Gone Girl</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://resizing.flixster.com/0a1efjiiqTw0v_BlIIkfb_TSs-c=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p22050444_b_h10_aa.jpg" alt="Recent 3">
+        <p>Blood Sisters</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwEVHPrqdzLqNQgMj7cTIxcS5znzcfxuq6UWe3X0kZ_Q&s=10" alt="Recent 3">
+        <p>Kandasamys The Baby</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="section">
+    <h2>Cartoon</h2>
+    <div class="medium-slider">
+      <div class="medium-item">
+        <img src="https://ntvb.tmsimg.com/assets/p29182686_v_h8_ac.jpg?w=1280&h=720" alt="Recent 1">
+        <p>Sneaks</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/553302dd-ba13-4421-a1bb-6101e6ff1a3b/b0323aa3901a5399f39049f17a36f43bc59fe39d.jpg?host=wbd-images.prod-vod.h264.io&partner=beamcom" alt="Recent 2">
+        <p>Space Jam</p>
+      </div>
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYfuHR20h7QC3gT2_QABY3tiAFpT--k3TVVg&usqp=CAU" alt="Recent 3">
+        <p>Moana 2</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFQyPF_0LaRg62xeqratedKCN2jzS-TM4Nbp3A9OlPhg&s=10" alt="Recent 3">
+        <p>The King Of Kings</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="medium-item">
+        <img src="https://img1.hulu.com/user/v3/artwork/717efda4-1a4a-4c57-9618-28a337640037?base_image_bucket_name=image_manager&base_image=ef9fc222-2f3d-4ceb-87e3-f461e665e48d&size=1200x630&format=webp" alt="Recent 3">
+        <p>Monsters vs. Aliens</p>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+    
+    
+    
+    
+    
+  </div>
+  <div id="favorites" class="content-section">
+    
+    
+    
+    
+    
+    
+    
+    <div id='map'></div>
+    
+    
+    
+    
+    
+  </div>
+  <div id="profile" class="content-section">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <section>
+
+  <div class="games-grid">
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/9/118219/104247/384x216/archer-go.webp" alt="Game 1">
+      
+      <p class="game-title">Archer Go</p>
+    </div>
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/7/118227/104254/384x216/deep-in-the-lab-chapter-1.webp" alt="Game 2">
+      
+      <p class="game-title">Deep In The Lab</p>
+    </div>
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/4/118224/104252/384x216/table-tennis-open.webp" alt="Game 3">
+      
+      <p class="game-title">Tennis Table Open</p>
+    </div>
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/8/118208/104235/384x216/obby-survive-parkour.webp" alt="Game 4">
+      
+      <p class="game-title">Survive Parkour</p>
+    </div>
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/8/118188/104215/384x216/strykon.webp" alt="Game 5">
+      
+      <p class="game-title">Strykon</p>
+    </div>
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/3/118153/104180/384x216/block-crasher.webp" alt="Game 6">
+      
+      <p class="game-title">Block Crasher</p>
+    </div>
+    
+    <div class="game-card">
+      <img src="https://assets.bgames.com/4/116554/102556/384x216/asphalt-retro.webp" alt="Game 7">
+      
+      <p class="game-title">Asphalt Retro</p>
+    </div>
+    
+    <div 
